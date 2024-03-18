@@ -42,8 +42,8 @@ public class SignUpActivity extends AppCompatActivity {
             FirebaseAuth mAuth = FirebaseAuth.getInstance();
 
             // Create user
-//            mAuth.createUserWithEmailAndPassword(email, password)
-//                    .addOnCompleteListener(this, new MyCompleteListener(this, mAuth));
+            mAuth.createUserWithEmailAndPassword(email, password)
+                    .addOnCompleteListener(this, new MyCompleteListener(this, mAuth));
         }
 
     }

@@ -37,9 +37,9 @@ public class LoginActivity extends AppCompatActivity {
             // Initialize Firebase Auth
             FirebaseAuth mAuth = FirebaseAuth.getInstance();
 
-//            // Login user
-//            mAuth.signInWithEmailAndPassword(email, password)
-//                    .addOnCompleteListener(this, new MyCompleteListener(this, mAuth));
+            // Login user
+            mAuth.signInWithEmailAndPassword(email, password)
+                    .addOnCompleteListener(this, new MyCompleteListener(this, mAuth));
         }
     }
 
