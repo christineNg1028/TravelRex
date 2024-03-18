@@ -10,6 +10,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -36,10 +37,11 @@ public class LoginActivity extends AppCompatActivity {
         } else {
             // Initialize Firebase Auth
             FirebaseAuth mAuth = FirebaseAuth.getInstance();
+            FirebaseFirestore db = FirebaseFirestore.getInstance();
 
             // Login user
             mAuth.signInWithEmailAndPassword(email, password)
-                    .addOnCompleteListener(this, new MyCompleteListener(this, mAuth));
+                    .addOnCompleteListener(this, new MyCompleteListener(this, mAuth, db));
         }
     }
 

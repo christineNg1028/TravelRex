@@ -9,6 +9,7 @@ import android.widget.EditText;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 public class SignUpActivity extends AppCompatActivity {
 
@@ -36,14 +37,15 @@ public class SignUpActivity extends AppCompatActivity {
         } else if (!password.equals(passwordConfirm)) {
             displayDialog(this, R.string.sign_up_error_title, R.string.sign_up_error_passwd_diff);
         } else if (password.length() < 6) {
-            displayDialog(this, R.string.sign_up_error_title, R.string.sign_up_error_passwd_diff);
+            displayDialog(this, R.string.sign_up_error_title, R.string.sign_up_error_passwd_len);
         } else {
             // Initialize Firebase Auth
             FirebaseAuth mAuth = FirebaseAuth.getInstance();
+            FirebaseFirestore db = FirebaseFirestore.getInstance();
 
             // Create user
             mAuth.createUserWithEmailAndPassword(email, password)
-                    .addOnCompleteListener(this, new MyCompleteListener(this, mAuth));
+                    .addOnCompleteListener(this, new MyCompleteListener(this, mAuth, db));
         }
 
     }
