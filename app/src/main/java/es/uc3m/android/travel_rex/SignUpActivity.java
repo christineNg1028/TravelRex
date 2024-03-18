@@ -11,6 +11,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class SignUpActivity extends AppCompatActivity {
 
     @Override
@@ -24,10 +27,14 @@ public class SignUpActivity extends AppCompatActivity {
     }
 
     private void signUp(View view) {
+        EditText userName = findViewById(R.id.user_name);
+        EditText userLocation = findViewById(R.id.user_location);
         EditText userEmail = findViewById(R.id.user_email);
         EditText userPassword = findViewById(R.id.user_password);
         EditText userPasswordConfirm = findViewById(R.id.user_password_confirm);
 
+        String name = userName.getText().toString();
+        String location = userLocation.getText().toString();
         String email = userEmail.getText().toString();
         String password = userPassword.getText().toString();
         String passwordConfirm = userPasswordConfirm.getText().toString();
@@ -39,13 +46,19 @@ public class SignUpActivity extends AppCompatActivity {
         } else if (password.length() < 6) {
             displayDialog(this, R.string.sign_up_error_title, R.string.sign_up_error_passwd_len);
         } else {
-            // Initialize Firebase Auth
+            // Initialize Firebase Auth & Firestore
             FirebaseAuth mAuth = FirebaseAuth.getInstance();
             FirebaseFirestore db = FirebaseFirestore.getInstance();
 
+            // User object to save to db
+            Map<String, Object> userDetails = new HashMap<>();
+            userDetails.put("name", name);
+            userDetails.put("location", location);
+            userDetails.put("email", email);
+
             // Create user
             mAuth.createUserWithEmailAndPassword(email, password)
-                    .addOnCompleteListener(this, new MyCompleteListener(this, mAuth, db));
+                    .addOnCompleteListener(this, new SignUpListener(this, mAuth, db, userDetails));
         }
 
     }

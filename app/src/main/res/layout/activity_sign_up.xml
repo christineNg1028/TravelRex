@@ -44,6 +44,31 @@
         app:layout_constraintVertical_bias="0" />
 
     <EditText
+        android:id="@+id/user_name"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="@string/name_edit_text"
+        android:inputType="textPersonName"
+        app:layout_constraintBottom_toBottomOf="@+id/bottom"
+        app:layout_constraintEnd_toStartOf="@id/right"
+        app:layout_constraintHorizontal_bias="0"
+        app:layout_constraintStart_toStartOf="@+id/sign_up_title"
+        app:layout_constraintTop_toBottomOf="@+id/sign_up_title"
+        app:layout_constraintVertical_bias="0.05" />
+
+    <EditText
+        android:id="@+id/user_location"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="@string/location_edit_text"
+        app:layout_constraintBottom_toBottomOf="@+id/bottom"
+        app:layout_constraintEnd_toStartOf="@id/right"
+        app:layout_constraintHorizontal_bias="0"
+        app:layout_constraintStart_toStartOf="@+id/sign_up_title"
+        app:layout_constraintTop_toBottomOf="@+id/sign_up_title"
+        app:layout_constraintVertical_bias="0.2" />
+
+    <EditText
         android:id="@+id/user_email"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -51,10 +76,10 @@
         android:inputType="textEmailAddress"
         app:layout_constraintBottom_toBottomOf="@+id/bottom"
         app:layout_constraintEnd_toStartOf="@id/right"
-        app:layout_constraintHorizontal_bias="0"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/sign_up_title"
         app:layout_constraintTop_toBottomOf="@+id/sign_up_title"
-        app:layout_constraintVertical_bias="0.05" />
+        app:layout_constraintVertical_bias="0.35" />
 
     <EditText
         android:id="@+id/user_password"
