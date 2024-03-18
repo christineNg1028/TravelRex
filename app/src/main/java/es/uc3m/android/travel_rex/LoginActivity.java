@@ -19,7 +19,7 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
         findViewById(R.id.login_button).setOnClickListener(this::login);
-//        findViewById(R.id.sign_up).setOnClickListener(this::signUp);
+        findViewById(R.id.sign_up).setOnClickListener(this::signUp);
     }
 
     private void login(View view) {
@@ -37,23 +37,23 @@ public class LoginActivity extends AppCompatActivity {
             // Initialize Firebase Auth
             FirebaseAuth mAuth = FirebaseAuth.getInstance();
 
-            // Login user
+//            // Login user
 //            mAuth.signInWithEmailAndPassword(email, password)
 //                    .addOnCompleteListener(this, new MyCompleteListener(this, mAuth));
         }
     }
 
-//    private void signUp(View view) {
-//        Intent intent = new Intent(getBaseContext(), SignUpActivity.class);
-//        startActivity(intent);
-//    }
+    private void signUp(View view) {
+        Intent intent = new Intent(getBaseContext(), SignUpActivity.class);
+        startActivity(intent);
+    }
 
     public static void displayDialog(Context context, int title_id, int error_message_id) {
         AlertDialog.Builder ad = new AlertDialog.Builder(context);
         ad.setTitle(title_id);
         ad.setMessage(error_message_id);
-//        ad.setPositiveButton(R.string.sing_up_error_button,
-//                (dialog, position) -> dialog.cancel());
+        ad.setPositiveButton(R.string.sign_up_error_button,
+                (dialog, position) -> dialog.cancel());
         ad.show();
     }
 
