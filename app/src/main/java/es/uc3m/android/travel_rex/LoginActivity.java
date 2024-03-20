@@ -37,11 +37,10 @@ public class LoginActivity extends AppCompatActivity {
         } else {
             // Initialize Firebase Auth
             FirebaseAuth mAuth = FirebaseAuth.getInstance();
-            FirebaseFirestore db = FirebaseFirestore.getInstance();
 
             // Login user
             mAuth.signInWithEmailAndPassword(email, password)
-                    .addOnCompleteListener(this, new MyCompleteListener(this, mAuth, db));
+                    .addOnCompleteListener(this, new LoginListener(this, mAuth));
         }
     }
 

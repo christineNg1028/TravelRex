@@ -8,6 +8,8 @@
     <string name="delete">Delete</string>
     <string name="login_label">Login</string>
     <string name="sign_in_to_continue">Please sign in to continue</string>
+    <string name="name_edit_text">Name</string>
+    <string name="location_edit_text">Current location</string>
     <string name="email_edit_text">Email</string>
     <string name="password_edit_text">Password</string>
     <string name="signup_label">Create account</string>

@@ -15,28 +15,27 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-import java.util.HashMap;
 import java.util.Map;
 
-public class MyCompleteListener implements OnCompleteListener<AuthResult> {
+public class SignUpListener implements OnCompleteListener<AuthResult> {
 
     Context context;
     FirebaseAuth mAuth;
     FirebaseFirestore db;
+    Map<String, Object> userDetails;
 
-    public MyCompleteListener(Context context, FirebaseAuth mAuth, FirebaseFirestore db) {
+    public SignUpListener(Context context, FirebaseAuth mAuth, FirebaseFirestore db, Map<String, Object> userDetails) {
         this.context = context;
         this.mAuth = mAuth;
         this.db = db;
+        this.userDetails = userDetails;
     }
 
     @Override
     public void onComplete(@NonNull Task<AuthResult> task) {
         if (task.isSuccessful()) {
             FirebaseUser user = mAuth.getCurrentUser();
-            Map<String, Object> userDoc = new HashMap<>();
-            userDoc.put("name", "christine");
-            db.collection("users").document(user.getUid()).set(userDoc);
+            db.collection("users").document(user.getUid()).set(userDetails);
             Log.d(this.getClass().getName(),
                     "createUserWithEmail:success " + user);
             context.startActivity(new Intent(context, MainActivity.class));
