@@ -38,23 +38,6 @@ public class MainActivity extends AppCompatActivity {
                 replaceFragment(new ProfileFragment());
             }
 
-
-            /*switch (item.getItemId()){
-
-                case R.id.home:
-                    replaceFragment(new HomeFragment());
-                    break;
-                case R.id.map:
-                    replaceFragment(new MapFragment());
-                    break;
-                case R.id.add:
-                    replaceFragment(new AddFragment());
-                    break;
-                case R.id.profile:
-                    replaceFragment(new ProfileFragment());
-                    break;
-            }*/
-
             return true;
         });
     }
