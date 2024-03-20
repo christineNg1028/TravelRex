@@ -2,15 +2,71 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="fill_parent"
+    android:paddingStart="16px"
     tools:context=".ProfileFragment">
 
     <!-- TODO: Update blank fragment layout -->
     <TextView
-        android:layout_width="wrap_content"
+        android:id="@+id/textView2"
+        android:layout_width="393dp"
+        android:textFontWeight="1000"
         android:layout_height="wrap_content"
-        android:text="@string/profile_icon_title"
-        android:layout_gravity="center"
-        />
+        android:layout_marginTop="64px"
+        android:gravity="center_horizontal"
+        android:text="@string/profile_my_passport" />
+
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="90dp"
+        android:layout_marginLeft="64px"
+        android:layout_marginTop="128px"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="250px"
+            android:layout_height="250px"
+            android:background="@drawable/rounded"
+            android:padding="10dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/profile_icon" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/userNameTextView"
+                android:layout_width="274dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="@string/profile_icon_title"
+                android:textSize="20sp" />
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/textView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/profile_currently_in" />
+
+                <TextView
+                    android:id="@+id/userLocation"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:paddingStart="16px"
+                    android:text="@string/profile_icon_title" />
+            </TableRow>
+
+        </LinearLayout>
+
+    </TableRow>
 
 </FrameLayout>

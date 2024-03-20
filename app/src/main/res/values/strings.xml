@@ -33,6 +33,8 @@
     <string name="map_icon_title">Map</string>
     <string name="add_icon_title">Add</string>
     <string name="profile_icon_title">Profile</string>
+    <string name="profile_currently_in">Currently in: </string>
+    <string name="profile_my_passport">My Passport</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="search_for_destination">Search for Destination</string>
     <string name="post_button_text">Share</string>
