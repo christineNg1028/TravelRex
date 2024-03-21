@@ -2,7 +2,18 @@
     <!-- Base application theme. -->
     <style name="Base.Theme.Travel_rex" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your light theme here. -->
-        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+        <item name="colorPrimary">@color/lightBrown</item>
+        <item name="colorSecondary">@color/cream</item>
+        <item name="android:textColorHighlightInverse">@color/cream</item>
+        <item name="android:textColorHighlight">@color/leafGreen</item>
+        <item name="android:textColorSecondaryInverse">@color/lightBrown</item>
+        <item name="android:textColorLinkInverse">@color/lightGreen</item>
+        <item name="android:textColorTertiaryInverse">@color/lightGreen</item>
+        <item name="colorPrimaryContainer">@color/lightGreen</item>
+        <item name="colorSecondaryContainer">@color/lightGreen</item>
+        <item name="colorSecondaryFixed">@color/lightGreen</item>
+        <item name="colorSecondaryFixedDim">@color/lightGreen</item>
+        <item name="colorPrimaryFixed">@color/lightGreen</item>
     </style>
 
     <style name="Theme.Travel_rex" parent="Base.Theme.Travel_rex" />
