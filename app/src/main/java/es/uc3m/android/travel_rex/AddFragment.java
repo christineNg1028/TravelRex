@@ -1,3 +1,4 @@
+// Source code: https://firebase.google.com/docs/firestore/manage-data/add-data#java_4
 package es.uc3m.android.travel_rex;
 
 import android.os.Bundle;

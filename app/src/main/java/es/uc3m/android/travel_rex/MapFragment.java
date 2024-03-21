@@ -1,3 +1,4 @@
+// Source code: https://docs.mapbox.com/android/maps/examples/simple-map-view/
 package es.uc3m.android.travel_rex;
 
 import android.os.Bundle;
