@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-
+    <!-- the following youtube tutorial was used for the fragment navigation:
+    https://www.youtube.com/watch?v=jOFLmKMOcK0
+    -->
     <item
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

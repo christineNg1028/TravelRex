@@ -17,11 +17,6 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import android.content.Context;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link ProfileFragment newInstance} factory method to
- * create an instance of this fragment.
- */
 public class ProfileFragment extends Fragment {
     private FirebaseUser user;
     private String displayName;

@@ -9,6 +9,9 @@ import android.os.Bundle;
 
 import es.uc3m.android.travel_rex.databinding.ActivityMainBinding;
 
+/* the following youtube tutorial was used for the fragment navigation:
+    https://www.youtube.com/watch?v=jOFLmKMOcK0
+*/
 public class MainActivity extends AppCompatActivity {
 
     ActivityMainBinding binding;
