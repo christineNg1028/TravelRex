@@ -38,7 +38,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="90dp"
                 android:layout_marginLeft="0px"
-                android:layout_marginTop="64px"
+                android:layout_marginTop="24px"
                 android:layout_marginBottom="64px"
                 android:gravity="center"
                 android:orientation="vertical">
@@ -63,8 +63,7 @@
                         android:layout_height="wrap_content"
                         android:text="@string/profile_icon_title"
                         android:textAlignment="textStart"
-                        android:textSize="20sp"
-                         />
+                        android:textSize="20sp" />
 
                     <TableRow
                         android:layout_width="match_parent"
@@ -352,7 +351,7 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="clip_horizontal|center_horizontal"
-                android:layout_marginTop="128px"
+                android:layout_marginTop="80px"
                 android:drawableRight="@drawable/baseline_arrow_forward_24"
                 android:scaleType="center"
                 android:text="@string/logout_button_text"
