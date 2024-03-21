@@ -1,3 +1,5 @@
+// Source code: https://firebase.google.com/docs/firestore/manage-data/add-data#java_4
+// Source code: https://github.com/bonigarcia/android-examples
 package es.uc3m.android.travel_rex;
 
 import android.app.Activity;
