@@ -3,7 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/cream"
+    >
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/left"
@@ -24,7 +26,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.35" />
+        app:layout_constraintGuide_percent="0.28" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/bottom"
@@ -49,19 +51,22 @@
     <TextView
         android:id="@+id/login_title"
         style="@style/TextAppearance.Material3.HeadlineMedium"
-        android:layout_width="wrap_content"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="@string/login_label"
-        app:layout_constraintHorizontal_bias="0"
+        android:gravity="center_horizontal"
+        android:text="@string/travel_rex"
         app:layout_constraintStart_toStartOf="@id/left"
-        app:layout_constraintTop_toTopOf="@+id/top"
-        app:layout_constraintVertical_bias="0" />
+        android:textStyle="bold"
+        android:textColor="@color/lightBrown"
+        app:layout_constraintTop_toTopOf="@+id/top" />
 
     <TextView
         android:id="@+id/sign"
-        android:layout_width="wrap_content"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:text="@string/sign_in_to_continue"
+        android:textColor="@color/darkBrown"
+        android:gravity="center_horizontal"
         app:layout_constraintHorizontal_bias="0"
         app:layout_constraintStart_toStartOf="@+id/login_title"
         app:layout_constraintTop_toBottomOf="@+id/login_title"
