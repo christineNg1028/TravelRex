@@ -19,6 +19,11 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Date;
 
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import android.widget.Toast;
+import androidx.annotation.NonNull;
+
 public class AddFragment extends Fragment {
     private View mView;
 
@@ -63,6 +68,29 @@ public class AddFragment extends Fragment {
         postDetails.put("title", title);
         postDetails.put("description", description);
         postDetails.put("timestamp", timestampSeconds);
-        db.collection("users").document(user.getUid()).collection("visited").document().set(postDetails);
+
+        db.collection("users")
+                .document(user.getUid())
+                .collection("visited")
+                .document()
+                .set(postDetails)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        // Post operation successful
+                        Toast.makeText(getContext(), "Post successful", Toast.LENGTH_SHORT).show();
+                        // Clear EditText fields
+                        searchForDestination.setText("");
+                        newTitle.setText("");
+                        newDescription.setText("");
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        // Handle failure
+                        Toast.makeText(getContext(), "Post failed: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });
     }
 }
