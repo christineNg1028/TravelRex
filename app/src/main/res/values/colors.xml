@@ -2,6 +2,7 @@
 <resources>
     <color name="black">#373737</color>
     <color name="cream">#F0EAD2</color>
+    <color name="lightCream">#F0EBE4</color>
     <color name="darkCream">#E2DCC4</color>
     <color name="lightBrown">#A98467</color>
     <color name="darkBrown">#6C584C</color>

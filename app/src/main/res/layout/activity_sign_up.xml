@@ -2,7 +2,9 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/cream"
+    >
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/left"
@@ -34,9 +36,11 @@
 
     <TextView
         android:id="@+id/sign_up_title"
-        style="@style/TextAppearance.Material3.HeadlineMedium"
+        style="@style/TextAppearance.Material3.HeadlineSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textStyle="bold"
+        android:textColor="@color/lightBrown"
         android:text="@string/signup_label"
         app:layout_constraintHorizontal_bias="0"
         app:layout_constraintStart_toStartOf="@id/left"
@@ -47,6 +51,10 @@
         android:id="@+id/user_name"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:background="@color/darkCream"
+        android:paddingStart="32px"
+        android:minHeight="48dp"
+        android:layout_marginBottom="32px"
         android:hint="@string/name_edit_text"
         android:inputType="textPersonName"
         app:layout_constraintBottom_toBottomOf="@+id/bottom"
@@ -60,6 +68,10 @@
         android:id="@+id/user_location"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:background="@color/darkCream"
+        android:paddingStart="32px"
+        android:minHeight="48dp"
+        android:layout_marginBottom="32px"
         android:hint="@string/location_edit_text"
         app:layout_constraintBottom_toBottomOf="@+id/bottom"
         app:layout_constraintEnd_toStartOf="@id/right"
@@ -72,6 +84,10 @@
         android:id="@+id/user_email"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:background="@color/darkCream"
+        android:paddingStart="32px"
+        android:minHeight="48dp"
+        android:layout_marginBottom="32px"
         android:hint="@string/email_edit_text"
         android:inputType="textEmailAddress"
         app:layout_constraintBottom_toBottomOf="@+id/bottom"
@@ -85,6 +101,10 @@
         android:id="@+id/user_password"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:background="@color/darkCream"
+        android:paddingStart="32px"
+        android:minHeight="48dp"
+        android:layout_marginBottom="32px"
         android:hint="@string/password_edit_text"
         android:inputType="textPassword"
         app:layout_constraintBottom_toBottomOf="@+id/bottom"
@@ -98,6 +118,10 @@
         android:id="@+id/user_password_confirm"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:background="@color/darkCream"
+        android:paddingStart="32px"
+        android:minHeight="48dp"
+        android:layout_marginBottom="32px"
         android:hint="@string/password_edit_text_confirm"
         android:inputType="textPassword"
         app:layout_constraintBottom_toBottomOf="@+id/bottom"
@@ -114,6 +138,7 @@
         android:layout_height="wrap_content"
         android:drawableRight="@drawable/baseline_arrow_forward_24"
         android:text="@string/sign_up_button_text"
+        android:layout_marginTop="10dp"
         app:layout_constraintBottom_toBottomOf="@+id/bottom"
         app:layout_constraintEnd_toEndOf="@+id/right"
         app:layout_constraintHorizontal_bias="0.5"
@@ -121,16 +146,35 @@
         app:layout_constraintTop_toBottomOf="@+id/user_password_confirm"
         app:layout_constraintVertical_bias="0.05" />
 
-    <TextView
-        android:id="@+id/sign_in"
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:clickable="true"
-        android:focusable="true"
-        android:text="@string/already_have_an_account_sign_in"
-        app:layout_constraintBottom_toTopOf="@+id/bottom"
-        app:layout_constraintEnd_toStartOf="@+id/right"
+        app:layout_constraintBottom_toBottomOf="@+id/bottom"
+        app:layout_constraintEnd_toEndOf="@+id/right"
+        app:layout_constraintStart_toStartOf="@+id/left"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="@+id/left" />
+        app:layout_constraintTop_toBottomOf="@+id/sign_up_button"
+        app:layout_constraintVertical_bias="0.35"
+        >
+        <TextView
+            android:id="@+id/already_have_account"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:focusable="true"
+            android:text="@string/already_have_an_account_sign_in"
+            />
+        <TextView
+            android:id="@+id/sign_in"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:focusable="true"
+            android:text="@string/sign_in"
+            android:layout_marginLeft="5dp"
+            android:textStyle="bold"
+            android:textColor="@color/lightBrown"/>
+    </LinearLayout>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

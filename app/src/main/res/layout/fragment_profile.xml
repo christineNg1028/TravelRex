@@ -2,17 +2,18 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="wrap_content"
+    android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:layout_marginLeft="64px"
-    android:paddingStart="16px"
-    tools:context=".ProfileFragment">
+    tools:context=".ProfileFragment"
+    android:background="@color/lightCream"
+    >
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="center_horizontal"
         android:gravity="center_horizontal"
+        android:paddingStart="32px"
         android:orientation="vertical">
 
         <LinearLayout
@@ -25,7 +26,7 @@
 
             <TextView
                 android:id="@+id/myPassword"
-                android:layout_width="297dp"
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="64px"
                 android:gravity="center_horizontal"
@@ -62,6 +63,8 @@
                         android:layout_height="wrap_content"
                         android:text="@string/profile_icon_title"
                         android:textAlignment="textStart"
+                        android:textStyle="bold"
+                        android:textColor="@color/lightBrown"
                         android:textSize="20sp" />
 
                     <TableRow
@@ -103,6 +106,7 @@
                     android:id="@+id/placesVisited"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:textStyle="bold"
                     android:layout_marginLeft="12px"
                     android:text="Places visited" />
 
@@ -230,10 +234,11 @@
                     android:src="@drawable/plane_icon" />
 
                 <TextView
-                    android:id="@+id/textView4"
+                    android:id="@+id/placesWanted"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Want to go" />
+                    android:text="Want to go"
+                    android:textStyle="bold" />
 
             </TableRow>
 
