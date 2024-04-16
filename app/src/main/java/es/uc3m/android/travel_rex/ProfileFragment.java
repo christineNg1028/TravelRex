@@ -53,9 +53,14 @@ public class ProfileFragment extends Fragment {
         mView = inflater.inflate(R.layout.fragment_profile, container, false);
         mView.findViewById(R.id.logout_button).setOnClickListener(this::logout);
         // Call updateUserNameTextView() after inflating the layout
+        mView.findViewById(R.id.profileIcon).setOnClickListener(this::uploadPhoto);
         fetchUserData();
 
         return mView;
+    }
+
+    private void uploadPhoto(View view) {
+        startActivity(new Intent(getActivity(), uploadPhoto.class));
     }
 
     private void logout(View view) {
