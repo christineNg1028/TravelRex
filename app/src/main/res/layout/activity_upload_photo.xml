@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--This file uses this Source code: https://github.com/Everyday-Programmer/Upload-Image-to-Firebase-Android/tree/main/app/src/main/java/com/example/uploadimagefirebase-->
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.google.android.material.appbar.MaterialToolbar
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/toolbar"
+    app:titleCentered="true"/>
+    
+    <com.google.android.material.progressindicator.LinearProgressIndicator
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_below="@id/toolbar"
+    android:id="@+id/progress"/>
+    
+    <ImageView
+    android:layout_width="300sp"
+    android:layout_height="300sp"
+    android:layout_centerHorizontal="true"
+    android:layout_below="@id/progress"
+    android:layout_marginTop="40sp"
+    android:id="@+id/imageView"/>
+
+    <com.google.android.material.button.MaterialButton
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_centerHorizontal="true"
+    android:id="@+id/selectImage"
+    android:layout_below="@id/imageView"
+    android:text="Select Photo"/>
+
+    <com.google.android.material.button.MaterialButton
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_centerHorizontal="true"
+    android:id="@+id/uploadImage"
+    android:layout_below="@id/selectImage"
+    android:text="Upload Image"
+    android:enabled="false"/>
+
+    </RelativeLayout>
