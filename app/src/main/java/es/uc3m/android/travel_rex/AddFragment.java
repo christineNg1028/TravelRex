@@ -2,6 +2,7 @@ package es.uc3m.android.travel_rex;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import android.util.Log;
@@ -11,9 +12,13 @@ import android.view.ViewGroup;
 
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.HashMap;
@@ -79,9 +84,6 @@ public class AddFragment extends Fragment {
     }
 
     private void post() {
-        Date currentTime = new Date();
-        long timestamp = currentTime.getTime();
-        long timestampSeconds = timestamp / 1000;
 
         EditText searchForDestination = mView.findViewById(R.id.search_for_destination);
         EditText newTitle = mView.findViewById(R.id.new_post_title);
@@ -101,7 +103,31 @@ public class AddFragment extends Fragment {
         postDetails.put("destination", destination);
         postDetails.put("title", title);
         postDetails.put("description", description);
-        postDetails.put("timestamp", timestamp);
         db.collection("users").document(user.getUid()).collection("visited").document().set(postDetails);
+        postDetails.put("timestamp", FieldValue.serverTimestamp());
+
+        db.collection("users")
+                .document(user.getUid())
+                .collection("visited")
+                .document()
+                .set(postDetails)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        // Post operation successful
+                        Toast.makeText(getContext(), "Post successful", Toast.LENGTH_SHORT).show();
+                        // Clear EditText fields
+                        searchForDestination.setText("");
+                        newTitle.setText("");
+                        newDescription.setText("");
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        // Handle failure
+                        Toast.makeText(getContext(), "Post failed: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });
     }
 }

@@ -27,7 +27,6 @@ public class ProfileFragment extends Fragment {
     Context context;
 
 
-
     public ProfileFragment() {
         // Required empty public constructor
     }
