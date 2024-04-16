@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -76,16 +77,18 @@ public class HomeActivityFragment extends Fragment {
                             String destination = document.getString("destination");
                             //String time = document.getString("timestamp");
                             String description = document.getString("description");
+                            int rating = 0;
+                            if (document.contains("rating")) {
+                                rating = document.getLong("rating").intValue();
+                           }
 
-                            placesList.add(new PlacesCards(destination, description, 10));
+                            placesList.add(new PlacesCards(destination, description, rating));
 
                             // notify adapter that data has been updated
                             adapter.notifyDataSetChanged();
                             // Process the document data as needed
                             // For example, you might want to create a model object or print the data
                         }
-                    } else {
-                        // Handle any errors
                     }
                 });
 

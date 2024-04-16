@@ -101,15 +101,31 @@
         app:layout_constraintTop_toBottomOf="@+id/new_post_description"
         app:layout_constraintVertical_bias="0.05" />
 
+    <EditText
+        android:id="@+id/new_post_rating"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@color/darkCream"
+        android:hint="@string/rating"
+        android:inputType="numberSigned"
+        android:minHeight="48dp"
+        android:paddingStart="16dp"
+        app:layout_constraintBottom_toBottomOf="@+id/bottom"
+        app:layout_constraintEnd_toStartOf="@id/right"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="@+id/search_for_destination"
+        app:layout_constraintTop_toBottomOf="@+id/search_for_destination"
+        app:layout_constraintVertical_bias="0.05" />
+
     <Button
         android:layout_width="0dp"
         android:id="@+id/post_button"
         android:layout_height="wrap_content"
         android:scaleType="center"
         android:text="@string/post_button_text"
-        android:layout_marginTop="56dp"
-        app:layout_constraintStart_toStartOf="@+id/search_for_destination"
-        app:layout_constraintTop_toBottomOf="@+id/search_for_destination"
+        android:layout_marginTop="60dp"
+        app:layout_constraintStart_toStartOf="@+id/new_post_rating"
+        app:layout_constraintTop_toBottomOf="@+id/new_post_rating"
         app:layout_constraintEnd_toEndOf="@+id/right"
  />
 

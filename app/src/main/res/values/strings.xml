@@ -40,6 +40,7 @@
     <string name="profile_my_passport">My Passport</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="search_for_destination">Search for Destination</string>
+    <string name="rating">Rating out of 5</string>
     <string name="post_button_text">Share</string>
     <string name="new_post">New Post</string>
     <string name="post_title">Title</string>
