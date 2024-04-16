@@ -56,7 +56,7 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.PlaceHolder>{
         void setDetails (PlacesCards place) {
             txtNameCard.setText(place.getPlaceName());
             txtDescriptionCard.setText(String.format(place.getPlaceDescription()));
-            txtRatingCard.setText(String.format(place.getPlaceDescription()));
+            txtRatingCard.setText(String.format(place.getPlaceRating().toString()));
         }
     }
 }

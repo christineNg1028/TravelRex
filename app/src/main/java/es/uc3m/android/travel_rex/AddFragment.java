@@ -54,10 +54,12 @@ public class AddFragment extends Fragment {
         EditText searchForDestination = mView.findViewById(R.id.search_for_destination);
         EditText newTitle = mView.findViewById(R.id.new_post_title);
         EditText newDescription = mView.findViewById(R.id.new_post_description);
+        EditText newPostRating = mView.findViewById(R.id.new_post_rating);
 
         String destination = searchForDestination.getText().toString();
         String title = newTitle.getText().toString();
         String description = newDescription.getText().toString();
+        Integer rating = Integer.parseInt(newPostRating.getText().toString());
 
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
         FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -69,6 +71,7 @@ public class AddFragment extends Fragment {
         postDetails.put("destination", destination);
         postDetails.put("title", title);
         postDetails.put("description", description);
+        postDetails.put("rating", rating);
         db.collection("users").document(user.getUid()).collection("visited").document().set(postDetails);
         postDetails.put("timestamp", FieldValue.serverTimestamp());
 
@@ -86,6 +89,7 @@ public class AddFragment extends Fragment {
                         searchForDestination.setText("");
                         newTitle.setText("");
                         newDescription.setText("");
+                        newPostRating.setText("");
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
