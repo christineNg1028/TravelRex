@@ -52,21 +52,46 @@
         android:textColor="@color/lightBrown"
         app:layout_constraintVertical_bias="0" />
 
+    <RadioGroup
+        android:id="@+id/radioGroup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/lightBrown"
+        android:layout_marginTop="50dp"
+        app:layout_constraintStart_toStartOf="@id/left"
+        app:layout_constraintTop_toTopOf="@id/top"
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:id="@+id/radioButton1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="true"
+            android:text="@string/visited_radio_button" />
+
+        <RadioButton
+            android:id="@+id/radioButton2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:text="@string/want_to_go_radio_button" />
+    </RadioGroup>
+
     <EditText
         android:id="@+id/new_post_title"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:background="@color/darkCream"
-        android:paddingStart="16dp"
         android:hint="@string/post_title"
         android:inputType="text"
         android:minHeight="48dp"
+        android:paddingStart="16dp"
         app:layout_constraintBottom_toBottomOf="@+id/bottom"
         app:layout_constraintEnd_toStartOf="@id/right"
-        app:layout_constraintHorizontal_bias="0"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/form_title"
         app:layout_constraintTop_toBottomOf="@+id/form_title"
-        app:layout_constraintVertical_bias="0.05"
+        app:layout_constraintVertical_bias="0.259"
         tools:ignore="RtlSymmetry" />
 
     <EditText
@@ -118,15 +143,15 @@
         app:layout_constraintVertical_bias="0.05" />
 
     <Button
-        android:layout_width="0dp"
         android:id="@+id/post_button"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="100dp"
         android:scaleType="center"
         android:text="@string/post_button_text"
-        android:layout_marginTop="60dp"
-        app:layout_constraintStart_toStartOf="@+id/new_post_rating"
-        app:layout_constraintTop_toBottomOf="@+id/new_post_rating"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/right"
- />
+        app:layout_constraintStart_toStartOf="@+id/search_for_destination"
+        app:layout_constraintTop_toBottomOf="@+id/search_for_destination" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

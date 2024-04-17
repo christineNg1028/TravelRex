@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 
 import android.widget.EditText;
 import android.widget.Toast;
+import android.widget.RadioGroup;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -45,10 +46,36 @@ public class AddFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         mView = inflater.inflate(R.layout.fragment_add, container, false);
+
+        // Find the RadioGroup
+        RadioGroup radioGroup = mView.findViewById(R.id.radioGroup);
+
+        // Set a listener for RadioButton selection changes
+        radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                // Check which RadioButton is checked
+                if (checkedId == R.id.radioButton1) {
+                    // Show all EditText fields
+                    setEditTextVisibility(View.VISIBLE);
+                } else if (checkedId == R.id.radioButton2) {
+                    // Hide all EditText fields except search_for_destination
+                    setEditTextVisibility(View.GONE);
+                    mView.findViewById(R.id.search_for_destination).setVisibility(View.VISIBLE);
+                }
+            }
+        });
+
         mView.findViewById(R.id.post_button).setOnClickListener(v -> post());
         return mView;
     }
 
+    private void setEditTextVisibility(int visibility) {
+        mView.findViewById(R.id.new_post_title).setVisibility(visibility);
+        mView.findViewById(R.id.new_post_description).setVisibility(visibility);
+        mView.findViewById(R.id.search_for_destination).setVisibility(visibility);
+        mView.findViewById(R.id.new_post_rating).setVisibility(visibility);
+    }
     private void post() {
 
         EditText searchForDestination = mView.findViewById(R.id.search_for_destination);
