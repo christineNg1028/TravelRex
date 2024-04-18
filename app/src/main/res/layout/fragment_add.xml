@@ -149,6 +149,7 @@
         android:layout_marginTop="100dp"
         android:scaleType="center"
         android:text="@string/post_button_text"
+        android:enabled="false"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/right"
         app:layout_constraintStart_toStartOf="@+id/search_for_destination"

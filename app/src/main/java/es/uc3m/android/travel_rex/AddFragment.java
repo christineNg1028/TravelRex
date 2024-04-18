@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 
 import android.widget.EditText;
 import android.widget.Toast;
+import android.widget.Button;
 import android.widget.RadioGroup;
 
 import com.google.android.gms.tasks.OnFailureListener;
@@ -65,6 +66,22 @@ public class AddFragment extends Fragment {
                 }
             }
         });
+
+        // Add text changed listeners to the EditText fields
+        EditText newPostTitle = mView.findViewById(R.id.new_post_title);
+        EditText newPostDescription = mView.findViewById(R.id.new_post_description);
+        EditText searchForDestination = mView.findViewById(R.id.search_for_destination);
+        EditText newPostRating = mView.findViewById(R.id.new_post_rating);
+        Button postButton = mView.findViewById(R.id.post_button);
+
+        // Create a FormListener with the Button and EditText fields
+        FormListener formListener = new FormListener(postButton, newPostTitle, newPostDescription, searchForDestination, newPostRating);
+
+        // Add the FormListener to each EditText field
+        newPostTitle.addTextChangedListener(formListener);
+        newPostDescription.addTextChangedListener(formListener);
+        searchForDestination.addTextChangedListener(formListener);
+        newPostRating.addTextChangedListener(formListener);
 
         mView.findViewById(R.id.post_button).setOnClickListener(v -> post());
         return mView;
