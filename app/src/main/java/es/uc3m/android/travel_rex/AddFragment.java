@@ -109,6 +109,33 @@ public class AddFragment extends Fragment {
 
         FirebaseUser user = mAuth.getCurrentUser();
 
+        // If destination is found in user's Want to Go's, remove it
+        db.collection("users")
+                .document(user.getUid())
+                .get()
+                .addOnSuccessListener(documentSnapshot -> {
+                    if (documentSnapshot.exists()) {
+                        // Check if the want_to_go field exists in the document
+                        if (documentSnapshot.contains("want_to_go")) {
+                            // Retrieve the want_to_go field
+                            Object wantToGoField = documentSnapshot.get("want_to_go");
+                            if (wantToGoField instanceof Map) {
+                                // Cast wantToGoField to a Map<String, Object>
+                                Map<String, Object> wantToGoMap = (Map<String, Object>) wantToGoField;
+                                // Check if the destination exists in want_to_go map
+                                if (wantToGoMap.containsKey(destination)) {
+                                    // Remove the destination from want_to_go map
+                                    wantToGoMap.remove(destination);
+                                    // Update the document with the modified want_to_go map
+                                    db.collection("users")
+                                            .document(user.getUid())
+                                            .update("want_to_go", wantToGoMap);
+                                }
+                            }
+                        }
+                    }
+                });
+
         // Post object to save to db
         Map<String, Object> postDetails = new HashMap<>();
         postDetails.put("destination", destination);
@@ -117,6 +144,7 @@ public class AddFragment extends Fragment {
         postDetails.put("rating", rating);
         postDetails.put("timestamp", FieldValue.serverTimestamp());
 
+        // Add post to visited collection for user
         db.collection("users")
                 .document(user.getUid())
                 .collection("visited")
