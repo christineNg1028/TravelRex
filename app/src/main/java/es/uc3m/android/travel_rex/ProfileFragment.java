@@ -30,6 +30,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+// Chat GPT used to debug recycler views
+
 public class ProfileFragment extends Fragment {
     private FirebaseUser user;
     private String displayName;
@@ -126,9 +128,10 @@ public class ProfileFragment extends Fragment {
                 Map<String, Object> wantedMap = (Map<String, Object>) documentSnapshot.get("want_to_go");
                 if (wantedMap != null) {
                     wantedList.clear();
-                    // Add place names from the map keys to wantedList
-                    for (String place : wantedMap.keySet()) {
-                        wantedList.add(place);
+                    // Extract place names from the map keys in reverse order and add them to wantedList
+                    List<String> places = new ArrayList<>(wantedMap.keySet());
+                    for (int i = places.size() - 1; i >= 0; i--) {
+                        wantedList.add(places.get(i));
                     }
                     wantedAdapter.notifyDataSetChanged();
                 } else {

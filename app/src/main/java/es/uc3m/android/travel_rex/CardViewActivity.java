@@ -28,16 +28,5 @@ public class CardViewActivity extends AppCompatActivity {
 
         adapter = new CardAdapter(this, placesArrayList);
         recyclerView.setAdapter(adapter);
-
-        CreateDataForCards();
-    }
-
-    private void CreateDataForCards() {
-        PlacesCards place = new PlacesCards("Paris", "good trip", 7);
-        placesArrayList.add(place);
-        place = new PlacesCards("Amsterdam", "bad trip", 2);
-        placesArrayList.add(place);
-        place = new PlacesCards("Barcelona", "best trip", 10);
-        placesArrayList.add(place);
     }
 }
