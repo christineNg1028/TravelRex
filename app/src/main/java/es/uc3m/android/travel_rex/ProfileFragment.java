@@ -28,6 +28,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class ProfileFragment extends Fragment {
     private FirebaseUser user;
@@ -38,7 +39,6 @@ public class ProfileFragment extends Fragment {
 
     private RecyclerView visitedRecyclerView;
     private RecyclerView wantedRecyclerView;
-    private List<String> dataList;
     private List<String> wantedList;
     private List<String> visitedList;
     private VisitedAdapter visitedAdapter;
@@ -83,25 +83,13 @@ public class ProfileFragment extends Fragment {
         wantedRecyclerView = mView.findViewById(R.id.wantedRecyclerView);
         wantedRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
 
-        dataList = new ArrayList<>();
         visitedList = new ArrayList<>();
         wantedList = new ArrayList<>();
-
-
-
-        dataList.add("Madrid");
-        dataList.add("Paris");
-        dataList.add("New York");
-        dataList.add("Dubai");
-        dataList.add("Toronto");
-        dataList.add("Milan");
-
-        // Populate dataList with your data
 
         visitedAdapter = new VisitedAdapter(visitedList);
         visitedRecyclerView.setAdapter(visitedAdapter);
 
-        wantedAdapter = new WantedAdapter(dataList);
+        wantedAdapter = new WantedAdapter(wantedList);
         wantedRecyclerView.setAdapter(wantedAdapter);
 
         return mView;
@@ -134,14 +122,31 @@ public class ProfileFragment extends Fragment {
             if (documentSnapshot.exists()) {
                 displayName = documentSnapshot.getString("name");
                 location = documentSnapshot.getString("location");
+
+                Map<String, Object> wantedMap = (Map<String, Object>) documentSnapshot.get("want_to_go");
+                if (wantedMap != null) {
+                    wantedList.clear();
+                    // Add place names from the map keys to wantedList
+                    for (String place : wantedMap.keySet()) {
+                        wantedList.add(place);
+                    }
+                    wantedAdapter.notifyDataSetChanged();
+                } else {
+                    // Handle null map field
+                }
+
+
                 updateUserTextViews();
-            } else {
+            }
+            else {
                 // Handle document not exists
                 return;
             }
         }).addOnFailureListener(e -> {
             // Handle failure
         });
+
+
 
         Query visited = visitedRef.orderBy("timestamp", Query.Direction.DESCENDING);
 
