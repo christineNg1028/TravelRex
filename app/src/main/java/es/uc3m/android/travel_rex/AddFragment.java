@@ -127,11 +127,11 @@ public class AddFragment extends Fragment {
                     public void onSuccess(Void aVoid) {
                         // Post operation successful
                         Toast.makeText(getContext(), "Post successful", Toast.LENGTH_SHORT).show();
-                        // Clear EditText fields
-                        searchForDestination.setText("");
-                        newTitle.setText("");
-                        newDescription.setText("");
-                        newPostRating.setText("");
+                        // Navigate back to the HomeFragment
+                        MainActivity activity = (MainActivity) getActivity();
+                        if (activity != null) {
+                            activity.replaceFragment(new HomeFragment());
+                        }
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
