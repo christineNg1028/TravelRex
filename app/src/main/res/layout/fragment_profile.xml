@@ -9,7 +9,7 @@
     >
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="fill_parent"
         android:layout_height="match_parent"
         android:layout_gravity="center_horizontal"
         android:gravity="center_horizontal"
@@ -18,7 +18,7 @@
 
         <LinearLayout
             android:id="@+id/profileLayout"
-            android:layout_width="wrap_content"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:paddingStart="32px"
@@ -89,7 +89,6 @@
                 </LinearLayout>
 
             </TableRow>
-
             <TableRow
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -111,114 +110,11 @@
                     android:text="Places visited" />
 
             </TableRow>
+            <include
+                android:id="@+id/visitedLayout"
+                layout="@layout/visited_layout"/>
 
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="114dp">
-
-                <com.google.android.material.card.MaterialCardView
-                    android:id="@+id/cardView1"
-                    android:layout_width="250px"
-                    android:layout_height="300px"
-                    android:backgroundTint="@color/lightGreen"
-                    android:checkable="true"
-                    android:clickable="true"
-                    android:focusable="true">
-
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent">
-
-                        <ImageView
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:scaleType="centerCrop"
-                            android:src="@drawable/sample1" />
-
-                        <TextView
-                            android:id="@+id/place_name1"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentStart="true"
-                            android:layout_alignParentEnd="true"
-                            android:layout_alignParentBottom="true"
-                            android:background="@color/cream"
-                            android:gravity="center_horizontal"
-                            android:text="Paris"
-                            android:textStyle="bold" />
-                    </RelativeLayout>
-                </com.google.android.material.card.MaterialCardView>
-
-                <com.google.android.material.card.MaterialCardView
-                    android:id="@+id/cardView2"
-                    android:layout_width="250px"
-                    android:layout_height="300px"
-                    android:layout_marginLeft="32px"
-                    android:backgroundTint="@color/lightGreen"
-                    android:checkable="true"
-                    android:clickable="true"
-                    android:focusable="true">
-
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent">
-
-                        <ImageView
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:scaleType="centerCrop"
-                            android:src="@drawable/sample1" />
-
-                        <TextView
-                            android:id="@+id/place_name2"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentStart="true"
-                            android:layout_alignParentEnd="true"
-                            android:layout_alignParentBottom="true"
-                            android:background="@color/cream"
-                            android:gravity="center_horizontal"
-                            android:text="Paris"
-                            android:textStyle="bold" />
-                    </RelativeLayout>
-                </com.google.android.material.card.MaterialCardView>
-
-                <com.google.android.material.card.MaterialCardView
-                    android:id="@+id/cardView3"
-                    android:layout_width="250px"
-                    android:layout_height="300px"
-                    android:layout_marginStart="32px"
-                    android:backgroundTint="@color/lightGreen"
-                    android:checkable="true"
-                    android:clickable="true"
-                    android:focusable="true">
-
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent">
-
-                        <ImageView
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:scaleType="centerCrop"
-                            android:src="@drawable/sample1" />
-
-                        <TextView
-                            android:id="@+id/place_name3"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentStart="true"
-                            android:layout_alignParentEnd="true"
-                            android:layout_alignParentBottom="true"
-                            android:background="@color/cream"
-                            android:gravity="center_horizontal"
-                            android:text="Paris"
-                            android:textStyle="bold" />
-                    </RelativeLayout>
-                </com.google.android.material.card.MaterialCardView>
-
-            </LinearLayout>
 
             <TableRow
                 android:layout_width="match_parent"
@@ -242,113 +138,10 @@
 
             </TableRow>
 
-            <LinearLayout
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="32px">
+            <include
+                android:id="@+id/wantedLayout"
+                layout="@layout/wanted_layout"/>
 
-                <com.google.android.material.card.MaterialCardView
-                    android:id="@+id/cardView5"
-                    android:layout_width="250px"
-                    android:layout_height="300px"
-                    android:backgroundTint="@color/lightGreen"
-                    android:checkable="true"
-                    android:clickable="true"
-                    android:focusable="true">
-
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent">
-
-                        <ImageView
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:scaleType="centerCrop"
-                            android:src="@drawable/sample1" />
-
-                        <TextView
-                            android:id="@+id/place_name5"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentStart="true"
-                            android:layout_alignParentEnd="true"
-                            android:layout_alignParentBottom="true"
-                            android:background="@color/cream"
-                            android:gravity="center_horizontal"
-                            android:text="Paris"
-                            android:textStyle="bold" />
-                    </RelativeLayout>
-                </com.google.android.material.card.MaterialCardView>
-
-                <com.google.android.material.card.MaterialCardView
-                    android:id="@+id/cardView6"
-                    android:layout_width="250px"
-                    android:layout_height="300px"
-                    android:layout_marginLeft="32px"
-                    android:backgroundTint="@color/lightGreen"
-                    android:checkable="true"
-                    android:clickable="true"
-                    android:focusable="true">
-
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent">
-
-                        <ImageView
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:scaleType="centerCrop"
-                            android:src="@drawable/sample1" />
-
-                        <TextView
-                            android:id="@+id/place_name7"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentStart="true"
-                            android:layout_alignParentEnd="true"
-                            android:layout_alignParentBottom="true"
-                            android:background="@color/cream"
-                            android:gravity="center_horizontal"
-                            android:text="Paris"
-                            android:textStyle="bold" />
-                    </RelativeLayout>
-                </com.google.android.material.card.MaterialCardView>
-
-                <com.google.android.material.card.MaterialCardView
-                    android:id="@+id/cardView8"
-                    android:layout_width="250px"
-                    android:layout_height="300px"
-                    android:layout_marginStart="32px"
-                    android:backgroundTint="@color/lightGreen"
-                    android:checkable="true"
-                    android:clickable="true"
-                    android:focusable="true">
-
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent">
-
-                        <ImageView
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:scaleType="centerCrop"
-                            android:src="@drawable/sample1" />
-
-                        <TextView
-                            android:id="@+id/place_name9"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentStart="true"
-                            android:layout_alignParentEnd="true"
-                            android:layout_alignParentBottom="true"
-                            android:background="@color/cream"
-                            android:gravity="center_horizontal"
-                            android:text="Paris"
-                            android:textStyle="bold" />
-                    </RelativeLayout>
-                </com.google.android.material.card.MaterialCardView>
-
-            </LinearLayout>
 
             <Button
                 android:id="@+id/logout_button"
