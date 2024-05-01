@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,9 +14,23 @@ import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+
 import android.content.Context;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
+// Chat GPT used to debug recycler views
 
 public class ProfileFragment extends Fragment {
     private FirebaseUser user;
@@ -23,6 +38,14 @@ public class ProfileFragment extends Fragment {
     private String location;
 
     private View mView;
+
+    private RecyclerView visitedRecyclerView;
+    private RecyclerView wantedRecyclerView;
+    private List<String> wantedList;
+    private List<String> visitedList;
+    private VisitedAdapter visitedAdapter;
+    private WantedAdapter wantedAdapter;
+
 
     Context context;
 
@@ -56,6 +79,21 @@ public class ProfileFragment extends Fragment {
         mView.findViewById(R.id.profileIcon).setOnClickListener(this::uploadPhoto);
         fetchUserData();
 
+        visitedRecyclerView = mView.findViewById(R.id.visitedRecyclerView);
+        visitedRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
+
+        wantedRecyclerView = mView.findViewById(R.id.wantedRecyclerView);
+        wantedRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
+
+        visitedList = new ArrayList<>();
+        wantedList = new ArrayList<>();
+
+        visitedAdapter = new VisitedAdapter(visitedList);
+        visitedRecyclerView.setAdapter(visitedAdapter);
+
+        wantedAdapter = new WantedAdapter(wantedList);
+        wantedRecyclerView.setAdapter(wantedAdapter);
+
         return mView;
     }
 
@@ -65,30 +103,66 @@ public class ProfileFragment extends Fragment {
 
     private void logout(View view) {
         FirebaseAuth.getInstance().signOut();
-        context.startActivity(new Intent(context, LoginActivity.class));
+        startActivity(new Intent(getActivity(), LoginActivity.class));
     }
 
 
-    private void fetchUserData() {
-        // Get the UID of the current user
-        String uid = user.getUid();
 
-        // Get the firebase database
+
+    private void fetchUserData() {
+        if (user == null) {
+            // Handle null user
+            return;
+        }
+
+        String uid = user.getUid();
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         DocumentReference userRef = db.collection("users").document(uid);
+        CollectionReference visitedRef = userRef.collection("visited");
 
-        // Get the document
         userRef.get().addOnSuccessListener(documentSnapshot -> {
             if (documentSnapshot.exists()) {
-                // if document exists, update fields
                 displayName = documentSnapshot.getString("name");
                 location = documentSnapshot.getString("location");
 
-                // Call method to update UI with user data
+                Map<String, Object> wantedMap = (Map<String, Object>) documentSnapshot.get("want_to_go");
+                if (wantedMap != null) {
+                    wantedList.clear();
+                    // Extract place names from the map keys in reverse order and add them to wantedList
+                    List<String> places = new ArrayList<>(wantedMap.keySet());
+                    for (int i = places.size() - 1; i >= 0; i--) {
+                        wantedList.add(places.get(i));
+                    }
+                    wantedAdapter.notifyDataSetChanged();
+                } else {
+                    // Handle null map field
+                }
+
+
                 updateUserTextViews();
-            } else {
-               // error message?
+            }
+            else {
+                // Handle document not exists
                 return;
+            }
+        }).addOnFailureListener(e -> {
+            // Handle failure
+        });
+
+
+
+        Query visited = visitedRef.orderBy("timestamp", Query.Direction.DESCENDING);
+
+        visited.get().addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                visitedList.clear();
+                for (QueryDocumentSnapshot document : task.getResult()) {
+                    String destination = document.getString("destination");
+                    visitedList.add(destination);
+                }
+                visitedAdapter.notifyDataSetChanged();
+            } else {
+                // Handle unsuccessful query
             }
         });
     }
