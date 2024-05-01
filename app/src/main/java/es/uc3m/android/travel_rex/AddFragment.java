@@ -152,9 +152,12 @@ public class AddFragment extends Fragment {
 
         FirebaseUser user = mAuth.getCurrentUser();
 
+        Map<String, Object> data = new HashMap<>();
+        data.put("want_to_go." + destination, null);
+
         db.collection("users")
                 .document(user.getUid())
-                .update("want_to_go", FieldValue.arrayUnion(destination))
+                .update(data)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
