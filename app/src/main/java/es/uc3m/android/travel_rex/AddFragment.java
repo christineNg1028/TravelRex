@@ -24,12 +24,6 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Date;
-
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import android.widget.Toast;
-import androidx.annotation.NonNull;
 
 public class AddFragment extends Fragment {
     private View mView;
@@ -55,6 +49,19 @@ public class AddFragment extends Fragment {
         EditText newPostRating = mView.findViewById(R.id.new_post_rating);
         Button postButton = mView.findViewById(R.id.post_button);
 
+        // Create FormListeners for Visited and Want to Go with the Button and EditText fields
+        FormListener formListenerVisited = new FormListener(postButton, newPostTitle, newPostDescription, searchForDestination, newPostRating);
+        FormListener formListenerWantToGo = new FormListener(postButton, searchForDestination);
+
+        // Add the FormListener to each EditText field
+        newPostTitle.addTextChangedListener(formListenerVisited);
+        newPostDescription.addTextChangedListener(formListenerVisited);
+        searchForDestination.addTextChangedListener(formListenerVisited);
+        newPostRating.addTextChangedListener(formListenerVisited);
+
+        // Set default function call to post
+        mView.findViewById(R.id.post_button).setOnClickListener(v -> post());
+
         // Find the RadioGroup
         RadioGroup radioGroup = mView.findViewById(R.id.radioGroup);
 
@@ -66,25 +73,13 @@ public class AddFragment extends Fragment {
                 if (checkedId == R.id.radioButton1) {
                     // Show all EditText fields
                     setEditTextVisibility(View.VISIBLE);
-
-                    // Create a FormListener with the Button and EditText fields
-                    FormListener formListenerVisited = new FormListener(postButton, newPostTitle, newPostDescription, searchForDestination, newPostRating);
-
-                    // Add the FormListener to each EditText field
-                    newPostTitle.addTextChangedListener(formListenerVisited);
-                    newPostDescription.addTextChangedListener(formListenerVisited);
                     searchForDestination.addTextChangedListener(formListenerVisited);
-                    newPostRating.addTextChangedListener(formListenerVisited);
-
                     mView.findViewById(R.id.post_button).setOnClickListener(v -> post());
                 } else if (checkedId == R.id.radioButton2) {
                     // Hide all EditText fields except search_for_destination
                     setEditTextVisibility(View.GONE);
                     mView.findViewById(R.id.search_for_destination).setVisibility(View.VISIBLE);
-
-                    FormListener formListenerWantToGo = new FormListener(postButton, searchForDestination);
                     searchForDestination.addTextChangedListener(formListenerWantToGo);
-
                     mView.findViewById(R.id.post_button).setOnClickListener(v -> addToWantToGo());
                 }
             }
@@ -99,7 +94,6 @@ public class AddFragment extends Fragment {
         mView.findViewById(R.id.new_post_rating).setVisibility(visibility);
     }
     private void post() {
-
         EditText searchForDestination = mView.findViewById(R.id.search_for_destination);
         EditText newTitle = mView.findViewById(R.id.new_post_title);
         EditText newDescription = mView.findViewById(R.id.new_post_description);
@@ -121,7 +115,6 @@ public class AddFragment extends Fragment {
         postDetails.put("title", title);
         postDetails.put("description", description);
         postDetails.put("rating", rating);
-        db.collection("users").document(user.getUid()).collection("visited").document().set(postDetails);
         postDetails.put("timestamp", FieldValue.serverTimestamp());
 
         db.collection("users")
