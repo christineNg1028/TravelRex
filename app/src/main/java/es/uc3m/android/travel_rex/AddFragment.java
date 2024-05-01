@@ -48,6 +48,13 @@ public class AddFragment extends Fragment {
         // Inflate the layout for this fragment
         mView = inflater.inflate(R.layout.fragment_add, container, false);
 
+        // Add text changed listeners to the EditText fields
+        EditText newPostTitle = mView.findViewById(R.id.new_post_title);
+        EditText newPostDescription = mView.findViewById(R.id.new_post_description);
+        EditText searchForDestination = mView.findViewById(R.id.search_for_destination);
+        EditText newPostRating = mView.findViewById(R.id.new_post_rating);
+        Button postButton = mView.findViewById(R.id.post_button);
+
         // Find the RadioGroup
         RadioGroup radioGroup = mView.findViewById(R.id.radioGroup);
 
@@ -59,31 +66,29 @@ public class AddFragment extends Fragment {
                 if (checkedId == R.id.radioButton1) {
                     // Show all EditText fields
                     setEditTextVisibility(View.VISIBLE);
+
+                    // Create a FormListener with the Button and EditText fields
+                    FormListener formListenerVisited = new FormListener(postButton, newPostTitle, newPostDescription, searchForDestination, newPostRating);
+
+                    // Add the FormListener to each EditText field
+                    newPostTitle.addTextChangedListener(formListenerVisited);
+                    newPostDescription.addTextChangedListener(formListenerVisited);
+                    searchForDestination.addTextChangedListener(formListenerVisited);
+                    newPostRating.addTextChangedListener(formListenerVisited);
+
+                    mView.findViewById(R.id.post_button).setOnClickListener(v -> post());
                 } else if (checkedId == R.id.radioButton2) {
                     // Hide all EditText fields except search_for_destination
                     setEditTextVisibility(View.GONE);
                     mView.findViewById(R.id.search_for_destination).setVisibility(View.VISIBLE);
+
+                    FormListener formListenerWantToGo = new FormListener(postButton, searchForDestination);
+                    searchForDestination.addTextChangedListener(formListenerWantToGo);
+
+                    mView.findViewById(R.id.post_button).setOnClickListener(v -> addToWantToGo());
                 }
             }
         });
-
-        // Add text changed listeners to the EditText fields
-        EditText newPostTitle = mView.findViewById(R.id.new_post_title);
-        EditText newPostDescription = mView.findViewById(R.id.new_post_description);
-        EditText searchForDestination = mView.findViewById(R.id.search_for_destination);
-        EditText newPostRating = mView.findViewById(R.id.new_post_rating);
-        Button postButton = mView.findViewById(R.id.post_button);
-
-        // Create a FormListener with the Button and EditText fields
-        FormListener formListener = new FormListener(postButton, newPostTitle, newPostDescription, searchForDestination, newPostRating);
-
-        // Add the FormListener to each EditText field
-        newPostTitle.addTextChangedListener(formListener);
-        newPostDescription.addTextChangedListener(formListener);
-        searchForDestination.addTextChangedListener(formListener);
-        newPostRating.addTextChangedListener(formListener);
-
-        mView.findViewById(R.id.post_button).setOnClickListener(v -> post());
         return mView;
     }
 
@@ -144,4 +149,34 @@ public class AddFragment extends Fragment {
                     }
                 });
     }
+
+    private void addToWantToGo() {
+        EditText searchForDestination = mView.findViewById(R.id.search_for_destination);
+        String destination = searchForDestination.getText().toString();
+
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+        FirebaseUser user = mAuth.getCurrentUser();
+
+        db.collection("users")
+                .document(user.getUid())
+                .update("want_to_go", FieldValue.arrayUnion(destination))
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        // Post operation successful
+                        Toast.makeText(getContext(), destination + " added to Want to Go list!", Toast.LENGTH_SHORT).show();
+                        // Clear EditText fields
+                        searchForDestination.setText("");
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        // Handle failure
+                        Toast.makeText(getContext(), "Could not add " + destination + " to Want to Go list." + e.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });
+    };
 }
