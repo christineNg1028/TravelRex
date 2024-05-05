@@ -21,6 +21,8 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.progressindicator.LinearProgressIndicator;
 import com.google.firebase.FirebaseApp;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
@@ -33,6 +35,7 @@ import es.uc3m.android.travel_rex.R;
 // This file using this Source code: https://github.com/Everyday-Programmer/Upload-Image-to-Firebase-Android/tree/main/app/src/main/java/com/example/uploadimagefirebase
 
 public class uploadPhoto extends AppCompatActivity {
+    private FirebaseUser user;
 StorageReference storageReference;
 LinearProgressIndicator progressIndicator;
 Uri image;
@@ -55,7 +58,9 @@ Toast.makeText(uploadPhoto.this, "Please select an image", Toast.LENGTH_SHORT).s
 
 @Override
 protected void onCreate(Bundle savedInstanceState) {
-super.onCreate(savedInstanceState);
+    user = FirebaseAuth.getInstance().getCurrentUser();
+
+    super.onCreate(savedInstanceState);
 setContentView(R.layout.activity_upload_photo);
 
 FirebaseApp.initializeApp(uploadPhoto.this);
@@ -88,7 +93,8 @@ uploadImage(image);
 }
 
 private void uploadImage(Uri file) {
-StorageReference ref = storageReference.child("images/" + UUID.randomUUID().toString());
+    String uid = user.getUid();
+    StorageReference ref = storageReference.child("profile_images/" + uid);
 ref.putFile(file).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
 @Override
 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
