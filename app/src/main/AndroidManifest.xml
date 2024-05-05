@@ -24,5 +24,9 @@
             <activity android:name=".SignUpActivity" />
             <activity android:name=".MainActivity" />
             <activity android:name=".uploadPhoto" />
+
+            <meta-data
+                android:name="com.google.android.geo.API_KEY"
+                android:value="AIzaSyB9VLnUpPfMWD2d_osyai6wY5ce_ViWre4" />
         </application>
 </manifest>
