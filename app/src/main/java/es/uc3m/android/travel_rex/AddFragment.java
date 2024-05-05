@@ -6,6 +6,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +22,12 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
+import com.google.android.gms.tasks.Task;
+import android.util.Log;
+import com.google.firebase.firestore.DocumentSnapshot;
+
+
 
 import java.util.HashMap;
 import java.util.Map;
@@ -81,6 +88,11 @@ public class AddFragment extends Fragment {
                     mView.findViewById(R.id.search_for_destination).setVisibility(View.VISIBLE);
                     searchForDestination.addTextChangedListener(formListenerWantToGo);
                     mView.findViewById(R.id.post_button).setOnClickListener(v -> addToWantToGo());
+                } else if (checkedId == R.id.radioButton3) {
+                    setEditTextVisibility(View.GONE);
+                    mView.findViewById(R.id.find_friends).setVisibility(View.VISIBLE);
+                    mView.findViewById(R.id.search_friend_button).setVisibility(View.VISIBLE);
+                    mView.findViewById(R.id.search_friend_button).setOnClickListener(v -> findFriends());
                 }
             }
         });
@@ -203,4 +215,57 @@ public class AddFragment extends Fragment {
                     }
                 });
     };
+
+    private void findFriends() {
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+        FirebaseUser user = mAuth.getCurrentUser();
+
+        EditText findFriends = mView.findViewById(R.id.find_friends);
+        String friendEmail = findFriends.getText().toString();
+
+        // Use UserSearchHelper to search for the user with the specified email
+        UserSearchHelper userSearchHelper = new UserSearchHelper();
+        Task<QuerySnapshot> searchTask = userSearchHelper.searchUserByEmail(friendEmail);
+
+        // Handle the result of the search task
+        searchTask.addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                QuerySnapshot querySnapshot = task.getResult();
+                if (querySnapshot != null && !querySnapshot.isEmpty()) {
+                    // Get the first document from the QuerySnapshot
+                    DocumentSnapshot friendDocument = querySnapshot.getDocuments().get(0);
+
+                    db.collection("users")
+                            .document(user.getUid())
+                            .update("friend_uids", FieldValue.arrayUnion(friendDocument.getId()))
+                            .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void aVoid) {
+                                    // Post operation successful
+                                    Toast.makeText(getContext(), friendDocument.get("name") + " added to Friends!", Toast.LENGTH_SHORT).show();
+                                    // Clear EditText fields
+                                    findFriends.setText("");
+                                }
+                            })
+                            .addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    // Handle failure
+                                    Toast.makeText(getContext(), "Could not add " + friendDocument.get("name") + " to Friends." + e.getMessage(), Toast.LENGTH_SHORT).show();
+                                }
+                            });
+                } else {
+                    // No user found with the specified email
+                    // Handle this case
+                }
+            } else {
+                // Error occurred while searching
+                Exception e = task.getException();
+                // Handle the error
+            }
+        });
+
+    }
 }

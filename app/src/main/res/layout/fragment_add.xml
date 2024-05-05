@@ -75,6 +75,13 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
             android:text="@string/want_to_go_radio_button" />
+
+        <RadioButton
+            android:id="@+id/radioButton3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:text="Find friends" />
     </RadioGroup>
 
     <EditText
@@ -142,6 +149,23 @@
         app:layout_constraintTop_toBottomOf="@+id/search_for_destination"
         app:layout_constraintVertical_bias="0.05" />
 
+    <EditText
+        android:id="@+id/find_friends"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@color/darkCream"
+        android:hint="Search for a friend"
+        android:inputType="text"
+        android:minHeight="48dp"
+        android:paddingStart="16dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@+id/bottom"
+        app:layout_constraintEnd_toStartOf="@id/right"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="@+id/new_post_description"
+        app:layout_constraintTop_toBottomOf="@+id/new_post_description"
+        app:layout_constraintVertical_bias="0.05" />
+
     <Button
         android:id="@+id/post_button"
         android:layout_width="0dp"
@@ -154,5 +178,18 @@
         app:layout_constraintEnd_toEndOf="@+id/right"
         app:layout_constraintStart_toStartOf="@+id/search_for_destination"
         app:layout_constraintTop_toBottomOf="@+id/search_for_destination" />
+
+    <Button
+        android:id="@+id/search_friend_button"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="100dp"
+        android:scaleType="center"
+        android:text="Find friend"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/right"
+        app:layout_constraintStart_toStartOf="@+id/find_friends"
+        app:layout_constraintTop_toBottomOf="@+id/find_friends" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
