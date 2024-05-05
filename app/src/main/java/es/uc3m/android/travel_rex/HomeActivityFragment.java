@@ -22,6 +22,18 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
+
+import java.util.List;
+
+
+import org.w3c.dom.Document;
+
 public class HomeActivityFragment extends Fragment {
     private FirebaseUser user;
 
@@ -62,7 +74,49 @@ public class HomeActivityFragment extends Fragment {
         // Get the firebase database
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
-        CollectionReference visitedRef = db.collection("users").document(uid).collection("visited");
+        DocumentReference currentUserDocument = db.collection("users").document(uid);
+
+        CollectionReference visitedRef = currentUserDocument.collection("visited");
+
+        // Get friend posts
+        currentUserDocument.get()
+                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                    @Override
+                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                        if (documentSnapshot.exists()) {
+                            List<String> friendUids = (List<String>) documentSnapshot.get("friend_uids");
+                            if (friendUids != null) {
+                                // Iterate over the list of friend UIDs
+                                for (String friendUid : friendUids) {
+                                    // Get a reference to the friend's visited posts
+                                    CollectionReference friendVisitedRef = db.collection("users").document(friendUid).collection("visited");
+
+                                    // Fetch and copy the friend's visited posts to the current user's visited posts
+                                    friendVisitedRef.get()
+                                            .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                                                @Override
+                                                public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                                                    for (DocumentSnapshot snapshot : queryDocumentSnapshots) {
+                                                        visitedRef.add(snapshot.getData());
+                                                    }
+                                                }
+                                            })
+                                            .addOnFailureListener(new OnFailureListener() {
+                                                @Override
+                                                public void onFailure(@NonNull Exception e) {
+                                                }
+                                            });
+                                }
+                            }
+                        }
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                    }
+                });
+
         Query feed = visitedRef.orderBy("timestamp", Query.Direction.DESCENDING);
 
         feed.get()
