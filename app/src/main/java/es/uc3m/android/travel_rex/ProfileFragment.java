@@ -30,6 +30,8 @@ import java.util.ArrayList;
 import java.util.List;import com.bumptech.glide.Glide;
 
 import java.util.Map;
+import java.util.UUID;
+
 import com.google.firebase.storage.StorageReference;
 import android.widget.ImageView;
 import com.google.firebase.storage.FirebaseStorage;
@@ -115,7 +117,9 @@ public class ProfileFragment extends Fragment {
     }
 
     private void uploadPhoto(View view) {
-        startActivity(new Intent(getActivity(), uploadPhoto.class));
+        Intent intent = new Intent(getActivity(), uploadPhoto.class);
+        intent.putExtra("type", "profile");
+        startActivity(intent);
     }
 
     private void logout(View view) {

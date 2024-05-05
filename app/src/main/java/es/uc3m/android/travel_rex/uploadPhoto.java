@@ -36,24 +36,26 @@ import es.uc3m.android.travel_rex.R;
 
 public class uploadPhoto extends AppCompatActivity {
     private FirebaseUser user;
-StorageReference storageReference;
-LinearProgressIndicator progressIndicator;
-Uri image;
-MaterialButton uploadImage, selectImage;
-ImageView imageView;
-private final ActivityResultLauncher<Intent> activityResultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
-@Override
+    StorageReference storageReference;
+    LinearProgressIndicator progressIndicator;
+    Uri image;
+    MaterialButton uploadImage, selectImage;
+    ImageView imageView;
+
+    String imageUuid;
+    private final ActivityResultLauncher<Intent> activityResultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
+        @Override
 public void onActivityResult(ActivityResult result) {
-if (result.getResultCode() == RESULT_OK) {
-if (result.getData() != null) {
-uploadImage.setEnabled(true);
-image = result.getData().getData();
-Glide.with(getApplicationContext()).load(image).into(imageView);
-}
-} else {
-Toast.makeText(uploadPhoto.this, "Please select an image", Toast.LENGTH_SHORT).show();
-}
-}
+    if (result.getResultCode() == RESULT_OK) {
+        if (result.getData() != null) {
+            uploadImage.setEnabled(true);
+            image = result.getData().getData();
+            Glide.with(getApplicationContext()).load(image).into(imageView);
+        }
+        } else {
+            Toast.makeText(uploadPhoto.this, "Please select an image", Toast.LENGTH_SHORT).show();
+        }
+    }
 });
 
 @Override
@@ -61,46 +63,55 @@ protected void onCreate(Bundle savedInstanceState) {
     user = FirebaseAuth.getInstance().getCurrentUser();
 
     super.onCreate(savedInstanceState);
-setContentView(R.layout.activity_upload_photo);
+    setContentView(R.layout.activity_upload_photo);
 
-FirebaseApp.initializeApp(uploadPhoto.this);
-storageReference = FirebaseStorage.getInstance().getReference();
+    FirebaseApp.initializeApp(uploadPhoto.this);
+    storageReference = FirebaseStorage.getInstance().getReference();
 
-Toolbar toolbar = findViewById(R.id.toolbar);
-setSupportActionBar(toolbar);
+    Toolbar toolbar = findViewById(R.id.toolbar);
+    setSupportActionBar(toolbar);
 
-progressIndicator = findViewById(R.id.progress);
+    progressIndicator = findViewById(R.id.progress);
 
-imageView = findViewById(R.id.imageView);
-selectImage = findViewById(R.id.selectImage);
-uploadImage = findViewById(R.id.uploadImage);
+    imageView = findViewById(R.id.imageView);
+    selectImage = findViewById(R.id.selectImage);
+    uploadImage = findViewById(R.id.uploadImage);
 
-selectImage.setOnClickListener(new View.OnClickListener() {
-@Override
-public void onClick(View view) {
-Intent intent = new Intent(Intent.ACTION_PICK);
-intent.setType("image/*");
-activityResultLauncher.launch(intent);
-}
+    selectImage.setOnClickListener(new View.OnClickListener() {
+    @Override
+    public void onClick(View view) {
+    Intent intent = new Intent(Intent.ACTION_PICK);
+    intent.setType("image/*");
+    activityResultLauncher.launch(intent);
+    }
+
 });
 
 uploadImage.setOnClickListener(new View.OnClickListener() {
 @Override
 public void onClick(View view) {
-uploadImage(image);
-}
-});
+    uploadImage(image);
+    }
+    });
 }
 
 private void uploadImage(Uri file) {
-    String uid = user.getUid();
-    StorageReference ref = storageReference.child("profile_images/" + uid);
-ref.putFile(file).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+    String type = getIntent().getStringExtra("type");
+    String path = "";
+    if (type == "profile"){
+        String uid = user.getUid();
+        path = "profile_images/" + uid;
+    }else {
+        String imageUuid = getIntent().getStringExtra("uuid");
+        path = "visited_images/" + imageUuid;
+    }
+
+    StorageReference ref = storageReference.child(path);
+    ref.putFile(file).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
 @Override
 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
 Toast.makeText(uploadPhoto.this, "Image Uploaded!!", Toast.LENGTH_SHORT).show();
-Intent intent = new Intent(getBaseContext(), MainActivity.class);
-startActivity(intent);
+finish();
 }
 }).addOnFailureListener(new OnFailureListener() {
 @Override
