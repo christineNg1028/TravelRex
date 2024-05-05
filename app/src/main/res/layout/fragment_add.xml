@@ -167,6 +167,24 @@
         app:layout_constraintVertical_bias="0.05" />
 
     <Button
+        android:id="@+id/upload_photo"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@color/darkCream"
+        android:hint="@string/rating"
+        android:inputType="numberSigned"
+        android:minHeight="48dp"
+        android:paddingStart="16dp"
+        android:text="Upload a Photo"
+        app:layout_constraintBottom_toBottomOf="@+id/bottom"
+        app:layout_constraintEnd_toStartOf="@id/right"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="@+id/new_post_rating"
+        app:layout_constraintTop_toBottomOf="@+id/new_post_rating"
+        app:layout_constraintVertical_bias="0.05" />
+
+
+    <Button
         android:id="@+id/post_button"
         android:layout_width="0dp"
         android:layout_height="wrap_content"

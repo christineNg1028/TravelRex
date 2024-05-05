@@ -27,12 +27,26 @@ import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
-import java.util.List;
+import java.util.List;import com.bumptech.glide.Glide;
+
 import java.util.Map;
+import java.util.UUID;
+
+import com.google.firebase.storage.StorageReference;
+import android.widget.ImageView;
+import com.google.firebase.storage.FirebaseStorage;
+import android.net.Uri;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.bumptech.glide.request.RequestOptions;
+import com.bumptech.glide.load.resource.bitmap.CircleCrop;
+import com.google.android.gms.tasks.OnFailureListener;
+
 
 // Chat GPT used to debug recycler views
 
 public class ProfileFragment extends Fragment {
+    private ImageView profileImageView;
+    private StorageReference storageReference;
     private FirebaseUser user;
     private String displayName;
     private String location;
@@ -72,12 +86,17 @@ public class ProfileFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+        storageReference = FirebaseStorage.getInstance().getReference();
         // Inflate the layout for this fragment
         mView = inflater.inflate(R.layout.fragment_profile, container, false);
         mView.findViewById(R.id.logout_button).setOnClickListener(this::logout);
         // Call updateUserNameTextView() after inflating the layout
         mView.findViewById(R.id.profileIcon).setOnClickListener(this::uploadPhoto);
+        fetchProfilePic();
         fetchUserData();
+
+        profileImageView = mView.findViewById(R.id.profileIcon);
 
         visitedRecyclerView = mView.findViewById(R.id.visitedRecyclerView);
         visitedRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
@@ -98,7 +117,9 @@ public class ProfileFragment extends Fragment {
     }
 
     private void uploadPhoto(View view) {
-        startActivity(new Intent(getActivity(), uploadPhoto.class));
+        Intent intent = new Intent(getActivity(), uploadPhoto.class);
+        intent.putExtra("type", "profile");
+        startActivity(intent);
     }
 
     private void logout(View view) {
@@ -106,7 +127,27 @@ public class ProfileFragment extends Fragment {
         startActivity(new Intent(getActivity(), LoginActivity.class));
     }
 
-
+    private void fetchProfilePic(){
+        String uid = user.getUid();
+        StorageReference imageRef = storageReference.child("profile_images/"+uid);
+        imageRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+            @Override
+            public void onSuccess(Uri uri) {
+                // Load image into ImageView
+                RequestOptions requestOptions = new RequestOptions()
+                        .transform(new CircleCrop());
+                Glide.with(requireContext())
+                        .load(uri)
+                        .apply(requestOptions)
+                        .into(profileImageView);
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                // Handle any errors
+            }
+        });
+    };
 
 
     private void fetchUserData() {

@@ -77,12 +77,13 @@ public class HomeActivityFragment extends Fragment {
                             String destination = document.getString("destination");
                             //String time = document.getString("timestamp");
                             String description = document.getString("description");
+                            String visitedImage = document.getString("imageUuid");
                             int rating = 0;
                             if (document.contains("rating")) {
                                 rating = document.getLong("rating").intValue();
                            }
 
-                            placesList.add(new PlacesCards(destination, description, rating));
+                            placesList.add(new PlacesCards(destination, description, rating, visitedImage));
 
                             // notify adapter that data has been updated
                             adapter.notifyDataSetChanged();

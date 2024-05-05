@@ -1,6 +1,7 @@
 // Source code: https://firebase.google.com/docs/firestore/manage-data/add-data#java_4
 package es.uc3m.android.travel_rex;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -31,9 +32,11 @@ import com.google.firebase.firestore.DocumentSnapshot;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 public class AddFragment extends Fragment {
     private View mView;
+    private String imageUuid;
 
     public AddFragment() {
         // Required empty public constructor
@@ -68,6 +71,8 @@ public class AddFragment extends Fragment {
 
         // Set default function call to post
         mView.findViewById(R.id.post_button).setOnClickListener(v -> post());
+        mView.findViewById(R.id.upload_photo).setOnClickListener(this::uploadPhoto);
+
 
         // Find the RadioGroup
         RadioGroup radioGroup = mView.findViewById(R.id.radioGroup);
@@ -97,6 +102,14 @@ public class AddFragment extends Fragment {
             }
         });
         return mView;
+    }
+
+    private void uploadPhoto(View view) {
+        imageUuid = UUID.randomUUID().toString();
+        Intent intent = new Intent(getActivity(), uploadPhoto.class);
+        intent.putExtra("uuid", imageUuid);
+        intent.putExtra("type", "visited");
+        startActivity(intent);
     }
 
     private void setEditTextVisibility(int visibility) {
@@ -155,6 +168,7 @@ public class AddFragment extends Fragment {
         postDetails.put("description", description);
         postDetails.put("rating", rating);
         postDetails.put("timestamp", FieldValue.serverTimestamp());
+        postDetails.put("imageUuid", imageUuid);
 
         // Add post to visited collection for user
         db.collection("users")
