@@ -124,9 +124,7 @@ public class AddFragment extends Fragment {
         EditText newDescription = mView.findViewById(R.id.new_post_description);
         EditText newPostRating = mView.findViewById(R.id.new_post_rating);
 
-        String[] destination = searchForDestination.getText().toString().split(",");
-        Double lng = Double.parseDouble(destination[0]);
-        Double lat = Double.parseDouble(destination[1]);
+        String destination = searchForDestination.getText().toString();
 
         String title = newTitle.getText().toString();
         String description = newDescription.getText().toString();
@@ -166,8 +164,7 @@ public class AddFragment extends Fragment {
 
         // Post object to save to db
         Map<String, Object> postDetails = new HashMap<>();
-        postDetails.put("long", lng);
-        postDetails.put("lat", lat);
+        postDetails.put("destination", destination);
         postDetails.put("title", title);
         postDetails.put("description", description);
         postDetails.put("rating", rating);
