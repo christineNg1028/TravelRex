@@ -9,7 +9,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -23,14 +22,11 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import android.content.Context;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 import java.util.List;import com.bumptech.glide.Glide;
 
 import java.util.Map;
-import java.util.UUID;
 
 import com.google.firebase.storage.StorageReference;
 import android.widget.ImageView;
@@ -40,7 +36,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.load.resource.bitmap.CircleCrop;
 import com.google.android.gms.tasks.OnFailureListener;
-
+import java.util.AbstractMap;
 
 // Chat GPT used to debug recycler views
 
@@ -56,7 +52,7 @@ public class ProfileFragment extends Fragment {
     private RecyclerView visitedRecyclerView;
     private RecyclerView wantedRecyclerView;
     private List<String> wantedList;
-    private List<String> visitedList;
+    private List<Map.Entry<String, String>> visitedList;
     private VisitedAdapter visitedAdapter;
     private WantedAdapter wantedAdapter;
 
@@ -199,7 +195,8 @@ public class ProfileFragment extends Fragment {
                 visitedList.clear();
                 for (QueryDocumentSnapshot document : task.getResult()) {
                     String destination = document.getString("destination");
-                    visitedList.add(destination);
+                    String imageUuid = document.getString("imageUuid");
+                    visitedList.add(new AbstractMap.SimpleEntry<>(destination, imageUuid));
                 }
                 visitedAdapter.notifyDataSetChanged();
             } else {
