@@ -13,6 +13,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import java.util.ArrayList;
@@ -64,6 +65,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         RequestQueue queue = Volley.newRequestQueue(getContext());
 
+        DocumentReference userRef = db.collection("users").document(uid);
         CollectionReference visitedRef = db.collection("users").document(uid).collection("visited");
 
         visitedRef.get()
@@ -73,10 +75,14 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
                             String destination = document.getString("destination");
                             String title = document.getString("title");
 
-                            // Check if destination string is not null before making the API call
-                            if (destination != null) {
-                                fetchCoordinates(googleMap, destination, title, queue);
-                            }
+                            userRef.get().addOnSuccessListener(documentSnapshot -> {
+                                if (documentSnapshot.exists()) {
+                                    String displayName = documentSnapshot.getString("name");
+                                    // Check if destination string is not null before making the API call
+                                    if (destination != null) {
+                                        fetchCoordinates(googleMap, destination, title, queue, displayName);
+                                    }
+                                }});
                         }
                     } else {
                         // Handle the error
@@ -85,7 +91,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
                 });
     }
 
-    private void fetchCoordinates(GoogleMap googleMap, String destination, String title, RequestQueue queue) {
+    private void fetchCoordinates(GoogleMap googleMap, String destination, String title, RequestQueue queue, String displayName) {
         String url = "https://geocode.xyz/" + destination.replace(" ", "%20") + "?json=1";
 
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
@@ -98,7 +104,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
                         LatLng new_dest = new LatLng(lat, lng);
                         googleMap.addMarker(new MarkerOptions()
                                 .position(new_dest)
-                                .title(title));
+                                .title(title + " by " + displayName));
                     } catch (JSONException e) {
                         Log.e("JSONError", "Failed to parse JSON", e);
                     }
