@@ -21,7 +21,6 @@ import com.google.firebase.storage.FirebaseStorage;
 
 
 import java.util.ArrayList;
-import java.util.Locale;
 
 public class CardAdapter extends RecyclerView.Adapter<CardAdapter.PlaceHolder>{
 
@@ -60,7 +59,7 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.PlaceHolder>{
     // view holder
     class PlaceHolder extends RecyclerView.ViewHolder {
         private TextView txtNameCard, txtDescriptionCard, txtRatingCard;
-        private ImageView visitedImageCard;
+        private ImageView visitedImageCard, profileImageView;
 
         PlaceHolder(View itemView){
             super(itemView);
@@ -68,6 +67,7 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.PlaceHolder>{
             txtDescriptionCard = itemView.findViewById(R.id.txtDescriptionCard);
             txtRatingCard = itemView.findViewById(R.id.txtRatingCard);
             visitedImageCard = itemView.findViewById(R.id.visitedImage);
+            profileImageView = itemView.findViewById(R.id.profileIcon);
         }
 
         void setDetails (PlacesCards place) {
@@ -75,8 +75,12 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.PlaceHolder>{
             txtDescriptionCard.setText(String.format(place.getPlaceDescription()));
             txtRatingCard.setText(String.format(place.getPlaceRating().toString()));
             if (place.getVisitedImage() != null) {
-                StorageReference imageRef = storageReference.child("visited_images/"+place.getVisitedImage().toString());
+                StorageReference imageRef = storageReference.child("visited_images/"+place.getVisitedImage());
                 fetchVisitedPic(imageRef,visitedImageCard);
+            }
+            if (place.getProfilePic() != null) {
+                StorageReference imageRef = storageReference.child("profile_images/"+place.getProfilePic());
+                fetchProfilePic(imageRef,profileImageView);
             }
         }
     }
@@ -91,6 +95,26 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.PlaceHolder>{
                         .load(uri)
                         .apply(requestOptions)
                         .into(visitedImageCard);
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                // Handle any errors
+            }
+        });
+    }
+
+    public void fetchProfilePic(StorageReference imageRef, ImageView profileImageView) {
+        imageRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+            @Override
+            public void onSuccess(Uri uri) {
+                // Load image into ImageView
+                RequestOptions requestOptions = new RequestOptions()
+                        .transform(new CircleCrop());
+                Glide.with(profileImageView.getContext())
+                        .load(uri)
+                        .apply(requestOptions)
+                        .into(profileImageView);
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override

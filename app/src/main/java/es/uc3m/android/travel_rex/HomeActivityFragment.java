@@ -5,19 +5,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
-import java.util.Objects;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
@@ -83,7 +79,7 @@ public class HomeActivityFragment extends Fragment {
                                 rating = document.getLong("rating").intValue();
                            }
 
-                            placesList.add(new PlacesCards(destination, description, rating, visitedImage));
+                            placesList.add(new PlacesCards(destination, description, rating, visitedImage, uid));
 
                             // notify adapter that data has been updated
                             adapter.notifyDataSetChanged();
