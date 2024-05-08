@@ -1,6 +1,8 @@
 package es.uc3m.android.travel_rex;
 
+
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,6 +30,7 @@ public class HomeActivityFragment extends Fragment {
     private RecyclerView recyclerView;
     private CardAdapter adapter;
     private ArrayList<PlacesCards> placesList;
+    private String userName;
 
     public HomeActivityFragment() {
         // Required empty public constructor
@@ -61,6 +64,12 @@ public class HomeActivityFragment extends Fragment {
 
         // Get the firebase database
         FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collection("users").document(uid).get().addOnSuccessListener(documentSnapshot -> {
+            if (documentSnapshot.exists()) {
+                // Get the name field from the document
+                userName = documentSnapshot.getString("name");
+            }
+        });
 
         CollectionReference visitedRef = db.collection("users").document(uid).collection("visited");
         Query feed = visitedRef.orderBy("timestamp", Query.Direction.DESCENDING);
@@ -72,8 +81,6 @@ public class HomeActivityFragment extends Fragment {
                         for (QueryDocumentSnapshot document : task.getResult()) {
                             // Access each document here
                             String documentId = document.getId();
-                            // You can access specific fields of the document like this:
-                            //String title = document.getString("title");
                             String destination = document.getString("destination");
                             //String time = document.getString("timestamp");
                             String description = document.getString("description");
@@ -83,7 +90,7 @@ public class HomeActivityFragment extends Fragment {
                                 rating = document.getLong("rating").intValue();
                            }
 
-                            placesList.add(new PlacesCards(destination, description, rating, visitedImage));
+                            placesList.add(new PlacesCards(userName, destination, description, rating, visitedImage));
 
                             // notify adapter that data has been updated
                             adapter.notifyDataSetChanged();
