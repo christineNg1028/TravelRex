@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -59,21 +60,25 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.PlaceHolder>{
 
     // view holder
     class PlaceHolder extends RecyclerView.ViewHolder {
-        private TextView txtNameCard, txtDescriptionCard, txtRatingCard;
+        private TextView txtNameCard, txtDescriptionCard, userName;
         private ImageView visitedImageCard;
+        private RatingBar ratingBar;
 
         PlaceHolder(View itemView){
             super(itemView);
+            userName = itemView.findViewById(R.id.postUser);
             txtNameCard = itemView.findViewById(R.id.txtNameCard);
             txtDescriptionCard = itemView.findViewById(R.id.txtDescriptionCard);
-            txtRatingCard = itemView.findViewById(R.id.txtRatingCard);
             visitedImageCard = itemView.findViewById(R.id.visitedImage);
+            ratingBar = itemView.findViewById(R.id.txtRatingCard);
         }
 
         void setDetails (PlacesCards place) {
             txtNameCard.setText(place.getPlaceName());
             txtDescriptionCard.setText(String.format(place.getPlaceDescription()));
-            txtRatingCard.setText(String.format(place.getPlaceRating().toString()));
+            ratingBar.setRating(place.getPlaceRating());
+            userName.setText(place.getUserName());
+
             if (place.getVisitedImage() != null) {
                 StorageReference imageRef = storageReference.child("visited_images/"+place.getVisitedImage().toString());
                 fetchVisitedPic(imageRef,visitedImageCard);

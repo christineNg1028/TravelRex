@@ -46,4 +46,5 @@
     <string name="post_description">Description</string>
     <string name="visited_radio_button">Visited</string>
     <string name="want_to_go_radio_button">Want to go</string>
+    <string name="feed_header_visited">visited</string>
 </resources>

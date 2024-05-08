@@ -6,14 +6,18 @@ public class PlacesCards {
     private Integer placeRating;
     private String visitedImage;
 
+    private String userName;
+
     // constructor
-    public PlacesCards (String placeName, String placeDescription, Integer placeRating, String visitedImage) {
+    public PlacesCards (String userName, String placeName, String placeDescription, Integer placeRating, String visitedImage) {
+    this.userName = userName;
     this.placeName = placeName;
     this.placeDescription = placeDescription;
     this.placeRating = placeRating;
     this.visitedImage = visitedImage;
     }
 
+    public String getUserName() { return userName; }
     public String getPlaceName() {
         return placeName;
     }
