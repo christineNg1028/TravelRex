@@ -6,15 +6,19 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
+import android.widget.Toast;
+import android.content.Context;
 
 public class UserSearchHelper {
 
     private FirebaseFirestore db;
     private CollectionReference usersCollection;
+    private Context mContext;
 
-    public UserSearchHelper() {
+    public UserSearchHelper(Context context) {
         db = FirebaseFirestore.getInstance();
         usersCollection = db.collection("users");
+        mContext = context;
     }
 
     public Task<QuerySnapshot> searchUserByEmail(String email) {
@@ -30,6 +34,7 @@ public class UserSearchHelper {
                 // Handle the documentSnapshot
             } else {
                 // No user found with the specified email
+                Toast.makeText(mContext, "No user found with the specified email", Toast.LENGTH_SHORT).show();
             }
         }).addOnFailureListener(e -> {
             // Handle any errors

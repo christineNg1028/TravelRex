@@ -7,7 +7,6 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,11 +24,7 @@ import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.android.gms.tasks.Task;
-import android.util.Log;
 import com.google.firebase.firestore.DocumentSnapshot;
-
-
-
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -250,7 +245,7 @@ public class AddFragment extends Fragment {
         String friendEmail = findFriends.getText().toString();
 
         // Use UserSearchHelper to search for the user with the specified email
-        UserSearchHelper userSearchHelper = new UserSearchHelper();
+        UserSearchHelper userSearchHelper = new UserSearchHelper(getContext());
         Task<QuerySnapshot> searchTask = userSearchHelper.searchUserByEmail(friendEmail);
 
         // Handle the result of the search task
