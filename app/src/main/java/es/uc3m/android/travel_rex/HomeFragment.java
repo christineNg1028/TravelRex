@@ -37,16 +37,6 @@ public class HomeFragment extends Fragment {
                     .commit();
         }
 
-        Log.d("HomeFragment", "onCreateView: Checking if HomeActivityFragment is already added");
-        if (getChildFragmentManager().findFragmentById(R.id.homeContainer) == null) {
-            Log.d("HomeFragment", "onCreateView: HomeActivityFragment is not added, adding now");
-            getChildFragmentManager().beginTransaction()
-                    .replace(R.id.homeContainer, new HomeActivityFragment())
-                    .commit();
-        } else {
-            Log.d("HomeFragment", "onCreateView: HomeActivityFragment already added, skipping");
-        }
-
         return rootView;
     }
 }
