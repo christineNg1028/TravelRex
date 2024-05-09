@@ -98,7 +98,7 @@ public void onClick(View view) {
 private void uploadImage(Uri file) {
     String type = getIntent().getStringExtra("type");
     String path = "";
-    if (type == "profile"){
+    if ("profile".equals(type)){
         String uid = user.getUid();
         path = "profile_images/" + uid;
     }else {
