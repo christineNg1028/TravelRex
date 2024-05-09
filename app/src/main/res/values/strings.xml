@@ -41,7 +41,7 @@
     <string name="search_for_destination">Search for Destination</string>
     <string name="rating">Rating out of 5</string>
     <string name="post_button_text">Share</string>
-    <string name="new_post">New Post</string>
+    <string name="add_page">Add to:</string>
     <string name="post_title">Title</string>
     <string name="post_description">Description</string>
     <string name="visited_radio_button">Visited</string>

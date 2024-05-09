@@ -57,22 +57,25 @@ public class AddFragment extends Fragment {
         EditText newPostDescription = mView.findViewById(R.id.new_post_description);
         EditText searchForDestination = mView.findViewById(R.id.search_for_destination);
         EditText newPostRating = mView.findViewById(R.id.new_post_rating);
+        EditText findFriends = mView.findViewById(R.id.find_friends);
         Button postButton = mView.findViewById(R.id.post_button);
+        Button searchFriendButton = mView.findViewById(R.id.search_friend_button);
 
         // Create FormListeners for Visited and Want to Go with the Button and EditText fields
         FormListener formListenerVisited = new FormListener(postButton, newPostTitle, newPostDescription, searchForDestination, newPostRating);
         FormListener formListenerWantToGo = new FormListener(postButton, searchForDestination);
+        FormListener formListenerFriends = new FormListener(searchFriendButton, findFriends);
 
         // Add the FormListener to each EditText field
         newPostTitle.addTextChangedListener(formListenerVisited);
         newPostDescription.addTextChangedListener(formListenerVisited);
         searchForDestination.addTextChangedListener(formListenerVisited);
         newPostRating.addTextChangedListener(formListenerVisited);
+        findFriends.addTextChangedListener(formListenerFriends);
 
         // Set default function call to post
         mView.findViewById(R.id.post_button).setOnClickListener(v -> post());
         mView.findViewById(R.id.upload_photo).setOnClickListener(this::uploadPhoto);
-
 
         // Find the RadioGroup
         RadioGroup radioGroup = mView.findViewById(R.id.radioGroup);
@@ -83,25 +86,30 @@ public class AddFragment extends Fragment {
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 // Check which RadioButton is checked
                 if (checkedId == R.id.radioButton1) {
-                    // Show all EditText fields
                     setEditTextVisibility(View.VISIBLE);
+                    setViewVisibility(R.id.find_friends, View.GONE);
+                    setViewVisibility(R.id.search_friend_button, View.GONE);
                     searchForDestination.addTextChangedListener(formListenerVisited);
                     mView.findViewById(R.id.post_button).setOnClickListener(v -> post());
                 } else if (checkedId == R.id.radioButton2) {
-                    // Hide all EditText fields except search_for_destination
                     setEditTextVisibility(View.GONE);
-                    mView.findViewById(R.id.search_for_destination).setVisibility(View.VISIBLE);
+                    setViewVisibility(R.id.search_for_destination, View.VISIBLE);
+                    setViewVisibility(R.id.search_friend_button, View.GONE);
                     searchForDestination.addTextChangedListener(formListenerWantToGo);
                     mView.findViewById(R.id.post_button).setOnClickListener(v -> addToWantToGo());
                 } else if (checkedId == R.id.radioButton3) {
                     setEditTextVisibility(View.GONE);
-                    mView.findViewById(R.id.find_friends).setVisibility(View.VISIBLE);
-                    mView.findViewById(R.id.search_friend_button).setVisibility(View.VISIBLE);
+                    setViewVisibility(R.id.find_friends, View.VISIBLE);
+                    setViewVisibility(R.id.search_friend_button, View.VISIBLE);
                     mView.findViewById(R.id.search_friend_button).setOnClickListener(v -> findFriends());
                 }
             }
         });
         return mView;
+    }
+
+    private void setViewVisibility(int viewId, int visibility) {
+        mView.findViewById(viewId).setVisibility(visibility);
     }
 
     private void uploadPhoto(View view) {
@@ -117,6 +125,7 @@ public class AddFragment extends Fragment {
         mView.findViewById(R.id.new_post_description).setVisibility(visibility);
         mView.findViewById(R.id.search_for_destination).setVisibility(visibility);
         mView.findViewById(R.id.new_post_rating).setVisibility(visibility);
+        mView.findViewById(R.id.find_friends).setVisibility(visibility);
     }
     private void post() {
         EditText searchForDestination = mView.findViewById(R.id.search_for_destination);
