@@ -38,7 +38,7 @@
     <string name="profile_icon_title">Profile</string>
     <string name="profile_currently_in">Currently in: </string>
     <string name="profile_my_passport">My Passport</string>
-    <string name="search_for_destination">Search for Destination</string>
+    <string name="search_for_destination">Destination (City, Country)</string>
     <string name="rating">Rating out of 5</string>
     <string name="post_button_text">Share</string>
     <string name="add_page">Add to:</string>
